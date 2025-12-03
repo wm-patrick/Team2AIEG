@@ -1,18 +1,21 @@
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
+from google import genai
 
+#load the environment variables
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
 	raise RuntimeError(
 		"key not found. Create .env file and add key"
 	)
+else:
+	print("API key loaded successfully.")
 
-#2. create the OPENAI client
-client = OpenAI(api_key = api_key)
+#2. create the Google GenAI client
+client = genai.Client(api_key=api_key)
 
 
 def build_prompt(name, method, subject):
@@ -25,19 +28,20 @@ def build_prompt(name, method, subject):
 	Method: {method}
 	Subject: {subject}
 	
-	Confirm to the user in a friendly and encouraging way their name and method of study. 
+	Confirm to the user in a friendly and encouraging way their name and method of study. Then, generate that method of study for the user.
 			
 	if you are unsure about the subject material do not guess and state that you are unsure.""")
 	
 	return prompt
 
 def get_study_materials(prompt: str) -> str:
-	model = "gpt-4-mini"
-	response = client.chat.completions.create(
-		model=model,
-		messages=[{"role": "user", "content": prompt}]
-	)
-	return response.choices[0].message.content
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
+    
+    return response.text
 
 def main():
 	name = input("What is your name? ")
