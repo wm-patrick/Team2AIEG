@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from google import genai
 
+#This comment is to test how to push 
 #load the environment variables
 load_dotenv()
 
