@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from google import genai
+from .rules import study_mode
 
 #This comment is to test how to push 
 #This comment is to demonstrate second push
@@ -46,6 +47,12 @@ def get_study_materials(prompt: str) -> str:
     return response.text
 
 def main():
+	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
+	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
+	mode = study_mode(state)
+
+	print(f"Suggested mode: {mode}")
+
 	name = input("What is your name? ")
 	method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
 	subject = input("What subject are you studying? ")
