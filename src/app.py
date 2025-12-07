@@ -67,3 +67,6 @@ def main():
 
 if __name__ == "__main__":
 	main()
+def chat_ui_placeholder():
+    """Future chat interface for Study Buddy."""
+    print("Chat UI component coming soon...")
