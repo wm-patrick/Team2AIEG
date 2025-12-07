@@ -1,4 +1,5 @@
 #------------------------IMPORTS GO HERE------------------------------------
+import argparse
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -49,10 +50,25 @@ def get_study_materials(prompt: str) -> str:
     
     return response.text
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Pomodoro Study Buddy: suggests a study mode and can ask an LLM to generate study materials."
+    )
+
+    # This shows at the bottom of --help
+    parser.epilog = "This terminal command will run the program: python -m src.app"
+
+    return parser.parse_args()
+
+
 def main():
 	"""Main function: Contains the CLI"""
+
+    #initialize the parser
+	args = parse_args()
 	
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
+	
 	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
 	mode = study_mode(state)
 
