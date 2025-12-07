@@ -1,3 +1,4 @@
+#------------------------IMPORTS GO HERE------------------------------------
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -5,6 +6,7 @@ from .rules import study_mode
 
 #This comment is to test how to push 
 #This comment is to demonstrate second push
+
 #load the environment variables
 load_dotenv()
 
@@ -22,6 +24,7 @@ client = genai.Client(api_key=api_key)
 
 
 def build_prompt(name, method, subject):
+	"""This function builds the prompt that is sent to LLM"""
 
 	prompt = (f""" Your role is to act as a friendly tutor or instructor.
 	
@@ -47,6 +50,8 @@ def get_study_materials(prompt: str) -> str:
     return response.text
 
 def main():
+	"""Main function: Contains the CLI"""
+	
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
 	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
 	mode = study_mode(state)
