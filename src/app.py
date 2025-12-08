@@ -69,14 +69,42 @@ def main():
 	
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
 	
+
+	VALID_STATES = ['tired', 'focused', 'overwhelmeed']
+ 	state = " " #initialize the state variable
+
+while state.strip().lower not in VALID_STATES:
 	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
-	mode = study_mode(state)
 
-	print(f"Suggested mode: {mode}")
+# Checks if the input is valid
+	if state.strip().lower() in VALID_STATES:
+			break
+	else:
+			print("Invalid selection. Please enter only tired, focused, or overwhelmed. ")
 
-	name = input("What is your name? ")
+mode = study_mode(state)
+print(f"Suggested mode: {mode}")
+
+
+#--gather user info----
+name = input("What is your name? ")
+
+
+#- gather study info ---
+
+VALID_METHODS = ['quiz', flashcards, 'summary']
+method = "" # initialize the method variable
+
+while method.strip().lower() not in VALID_METHODS:
 	method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
+	
+	if method.strip().lower() in VALID_METHODS:
+		break
+	else:
+		print("Invalid selecetion. Please enter only Quiz, Flashcards, or Summary.")
+	
 	subject = input("What subject are you studying? ")
+	
 	prompt = build_prompt(name, method, subject)
 	response = get_study_materials(prompt)
 	print(response)
