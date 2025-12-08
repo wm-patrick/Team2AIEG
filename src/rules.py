@@ -1,21 +1,17 @@
-def study_mode(current_state: str) -> str:
-    """Suggest a study mode based on the user's current energy level.
-    
-    Args:
-        current_state: The user's current energy state ('tired', 'focused', 'overwhelmed').
-    
-    Returns: A suffested study method.
-        
-        """
+def study_mode(current_state: str, minutes: int) -> str:
+    """Suggest a study mode based on the user's current energy level and mintues available."""
 
     if not isinstance(current_state, str):
         return "basic check-in"
+    if not isinstance(minutes, int) or minutes <=0:
+        return "basic check-in"
+    
     current_state = current_state.strip().lower()
 
-    if current_state == "tired":
-        return "light review/Summary"
-    elif current_state == "focused":
-        return "deep study/Quiz"
+    if current_state == "tired" and minutes < 20:
+        return "light review"
+    elif current_state == "focused" and minutes >= 40:
+        return "deep study"
     elif current_state == "overwhelmed":
         return "easy material/Flashcards"
     else:

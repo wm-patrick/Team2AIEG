@@ -175,32 +175,9 @@ def main():
 	
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
 	
-	#---- Profile Mangement -------------
-	if len(profiles) >= MAX_PROFILES:
-		print(f" MAXIMUM NUMBER OF PROFILES ({MAX_PROFILES}) reached. You must delete one before saving a new one. ")
-		profiles = delete_profile(profiles)
-	print(f" You currently have {len(profiles)} {MAX_PROFILES} profiles saved. ")
-
-	#------ Loading a new session -------
-	session_data = {}
-	if profiles and not (args.name and args.method and args.subject):
-
-		load_choice = input(" Would you like to '1' load a saved profile or (2) Start a new session? (1/2): ").strip()
-		if load_choice =='1':
-			session_data = load_existing_profile(profiles) or {}
-
-	#--------- Gather User Input --------
-	VALID_STATES = ['tired', 'focused', 'overwhelmed']
-	state = "" #initialize the state variable
-
-	while state.strip().lower() not in VALID_STATES:
-		state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
-		if state.strip().lower() in VALID_STATES:
-			break
-		else:
-			print("Invalid selection. Please enter only 'tired', 'focused', or 'overwhelmed'. ")
-
+	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
 	mode = study_mode(state)
+
 	print(f"Suggested mode: {mode}")
 
 	name = session_data.get('name') or args.name
