@@ -57,25 +57,25 @@ def delete_profile(profiles):
 	print("\n ====Select a Profile to delete ====")	
 	profile_keys = list(profiles.keys())
 	for i, name in enumerate(profile_keys, 1):
-	profile_data = profiles[name]
-	print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject:{profile_data.get('subject', 'N/A')}, Method: {profile_data.get('method', 'N/A')}")
+		profile_data = profiles[name]
+		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject:{profile_data.get('subject', 'N/A')}, Method: {profile_data.get('method', 'N/A')}")
 
 	while True:
-	try:
-		choice = input("Enter the number of the profile to delete (or 'c' to cancel): ")
-		if choice.lower() == 'c':
-			print("Deletion cancelled.")
-			return profiles
+		try:
+			choice = input("Enter the number of the profile to delete (or 'c' to cancel): ")
+			if choice.lower() == 'c':
+				print("Deletion cancelled.")
+				return profiles
 
-		index = int(choice) - 1
-		if 0 <= index < len(profile_keys):
-			deleted_name = profile_keys[index]
-			del profiles[deleted_name]
-			save_profiles(profiles)
-			print(f"Profile '{deleted_name}' delete succussful.")
-			return profiles
-		else:
-			print("Invalid number. Please try again.")
+			index = int(choice) - 1
+			if 0 <= index < len(profile_keys):
+				deleted_name = profile_keys[index]
+				del profiles[deleted_name]
+				save_profiles(profiles)
+				print(f"Profile '{deleted_name}' delete succussful.")
+				return profiles
+			else:
+				print("Invalid number. Please try again.")
 		except ValueError:
 			print("Invalid input. Please enter a number or 'c'. ")
 
@@ -92,19 +92,19 @@ def load_existing_profile(profiles):
 		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject: {profile_data.get('subject', 'N/A')}, Method:{profile_data.get('method', 'N/A')}")
 
 	while True:
-	try:
-		choice = input("Enter the number of profiles to load ( or 'c' to cancel): ")
-		if choice.lower() == 'c':
-			print("loading cancelled. Starting new session.")
-			return None
+		try:
+			choice = input("Enter the number of profiles to load ( or 'c' to cancel): ")
+			if choice.lower() == 'c':
+				print("loading cancelled. Starting new session.")
+				return None
 
-		index = int(choice) - 1
-		if 0 <= index < len(profile_keys):
-			profile_key = profile_keys[index]
-			print(f"Profile '{profile_key}' loaded successfuly.")
-			return profiles[profile_key]
-		else:
-			print("Invaild number. Please try again.")
+			index = int(choice) - 1
+			if 0 <= index < len(profile_keys):
+				profile_key = profile_keys[index]
+				print(f"Profile '{profile_key}' loaded successfuly.")
+				return profiles[profile_key]
+			else:
+				print("Invaild number. Please try again.")
 		except ValueError:
 			print("Invalid input. Please enter a number or 'c'.")
 
