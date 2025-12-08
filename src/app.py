@@ -1,7 +1,7 @@
 #------------------------IMPORTS GO HERE------------------------------------
 import argparse
 import os
-import JSON
+import json
 from dotenv import load_dotenv
 from google import genai
 from .rules import study_mode
@@ -44,7 +44,7 @@ def load_profiles():
 
 def save_profiles(profiles):
 	""" Saves the current dictionary of Profiles to JSON file"""
-	with open(PROFILES_FILE< 'w') as f:
+	with open(PROFILES_FILE, 'w') as f:
 		json.dump(profiles, f, indent=4)
 
 
@@ -54,13 +54,13 @@ def delete_profile(profiles):
 		print("No profiles to delete.")
 		return profiles
 
-print("\n ====Select a Profile to delete ====")	
-profile_keys = list(profiles.key())
-for i, name in enumerate(profile_keys, 1):
+	print("\n ====Select a Profile to delete ====")	
+	profile_keys = list(profiles.keys())
+	for i, name in enumerate(profile_keys, 1):
 	profile_data = profiles[name]
-	print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject:{profile_data.get('subject', 'N/A)}, Method: {profile_data.get('method', 'N/A')}')
+	print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject:{profile_data.get('subject', 'N/A')}, Method: {profile_data.get('method', 'N/A')}")
 
-while True:
+	while True:
 	try:
 		choice = input("Enter the number of the profile to delete (or 'c' to cancel): ")
 		if choice.lower() == 'c':
@@ -72,7 +72,7 @@ while True:
 			deleted_name = profile_keys[index]
 			del profiles[deleted_name]
 			save_profiles(profiles)
-			print(f"Profile '{deleted_name}' delete succussful.
+			print(f"Profile '{deleted_name}' delete succussful.")
 			return profiles
 		else:
 			print("Invalid number. Please try again.")
@@ -89,19 +89,19 @@ def load_existing_profile(profiles):
 	profile_keys = list(profiles.keys())
 	for i, name in enumerate(profile_keys, 1):
 		profile_data = profiles[name]
-		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject: {profile_data.get(subject, 'N/A')}, Method:{profile_data,get('method', 'N/A')})
+		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject: {profile_data.get('subject', 'N/A')}, Method:{profile_data.get('method', 'N/A')}")
 
-while True:
+	while True:
 	try:
 		choice = input("Enter the number of profiles to load ( or 'c' to cancel): ")
 		if choice.lower() == 'c':
-		print("loading cancelled. Starting new session.")
-		retun None
+			print("loading cancelled. Starting new session.")
+			return None
 
-		index = int(choice) -1
-		if 0 <= index len(profile_keys):
+		index = int(choice) - 1
+		if 0 <= index < len(profile_keys):
 			profile_key = profile_keys[index]
-			print(f "Profile '{profile_key} loaded successfuly. ")
+			print(f"Profile '{profile_key}' loaded successfuly.")
 			return profiles[profile_key]
 		else:
 			print("Invaild number. Please try again.")
@@ -140,7 +140,7 @@ def get_material_source():
 	""" Asks user to choose between source or AI generated study guide."""
 
 	while True:
-		source_choice = input(\nSelect material source: (1) Upload PDF or (2) Generate materials with AI: ).strip()
+		source_choice = input("\nSelect material source: (1) Upload PDF or (2) Generate materials with AI: ").strip()
 
 		if source_choice == '1':
 			pdf_path = input ("Enter the path to your PDF file: ")
@@ -175,103 +175,102 @@ def main():
 	
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
 	
-#---- Profile Mangement -------------
+	#---- Profile Mangement -------------
+	if len(profiles) >= MAX_PROFILES:
+		print(f" MAXIMUM NUMBER OF PROFILES ({MAX_PROFILES}) reached. You must delete one before saving a new one. ")
+		profiles = delete_profile(profiles)
+	print(f" You currently have {len(profiles)} {MAX_PROFILES} profiles saved. ")
 
-if len(profiles) >= MAX_PROFILES:
-	print(f" MAXIMUM NUMBER OF PROFILES ({MAX_PROFILES}) reached. You must delete one before saving a new one. ")
-	profiles = delete_profile(profiles)
-print(f" You currently have {len(profiles)} {MAX_PROFILES} profiles saved. ")
+	#------ Loading a new session -------
+	session_data = {}
+	if profiles and not (args.name and args.method and args.subject):
 
-#------ Loading a new session -------
-seesion_data = {}
-if profiles and not (args.name and args.method and args.subject):
+		load_choice = input(" Would you like to '1' load a saved profile or (2) Start a new session? (1/2): ").strip()
+		if load_choice =='1':
+			session_data = load_existing_profile(profiles) or {}
 
-	load_choice = input(" Would you like to '1' load a saved profile or (2) Start a new session? (1/2): ").strip()
-	if load_choice =='1':
-		session_data = load_existing_profile(profiles) or {}
+	#--------- Gather User Input --------
+	VALID_STATES = ['tired', 'focused', 'overwhelmed']
+	state = "" #initialize the state variable
 
-#--------- Gather User Input --------	
-
-VALID_STATES = ['tired', 'focused', 'overwhelmed']
-state = " " #initialize the state variable
-
-while state.strip().lower not in VALID_STATES:
-	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
-	if state.strip().lower() in VALID_STATES:
-			break
-	else:
-			print("Invalid selection. Please enter only 'tired', 'focused', or 'overwhelmed'. ")
-
-mode = study_mode(state)
-print(f"Suggested mode: {mode}")
-
-name = session_data.get('name') or args.name
-if not name:
-	name = input("What is your name? ")
-print(f" Name set: {name}")
-
-
-VALID_METHODS = ['quiz', 'flashcards', 'summary']
-method = session_data.get('method') or args.method
-
-
-if method and method.strip().lower() in VALID_METHODS:
-	method = method.stip()
-	print(f" Method set: {method}")
-else:
-	method = """
-	while method.strip().lower() not in VALID_METHODS:
-		method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
-		
-		if method.strip().lower() in VALID_METHODS:
+	while state.strip().lower() not in VALID_STATES:
+		state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
+		if state.strip().lower() in VALID_STATES:
 			break
 		else:
-			print("Invalid selecetion. Please enter only Quiz, Flashcards, or Summary.")
+			print("Invalid selection. Please enter only 'tired', 'focused', or 'overwhelmed'. ")
 
-subject = session_data.get('subject') or args.subject
-source_type = session_data.get('source')
+	mode = study_mode(state)
+	print(f"Suggested mode: {mode}")
 
-if subject:
-	print(f" Subject set: {subject}")
-	if not source_type:
-		source_type = "CLI/Loaded" 
-else:
-	subject, source_type = get_material_source()
-	subject = input("What subject are you studying? ")
+	name = session_data.get('name') or args.name
+	if not name:
+		name = input("What is your name? ")
+	print(f" Name set: {name}")
 
 
-print("\nGenerating study materials .....")
-prompt = build_prompt(name, method, subject)
-response = get_study_materials(prompt)
-print("\n" + response)
+	VALID_METHODS = ['quiz', 'flashcards', 'summary']
+	method = session_data.get('method') or args.method
 
 
-##------ Saving a Profile -------
+	if method and method.strip().lower() in VALID_METHODS:
+		method = method.strip()
+		print(f" Method set: {method}")
+	else:
+		method = ""
+		while method.strip().lower() not in VALID_METHODS:
+			method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
+			
+			if method.strip().lower() in VALID_METHODS:
+				break
+			else:
+				print("Invalid selecetion. Please enter only Quiz, Flashcards, or Summary.")
 
-current_profile_key = f"{name}_{method}_{subject}".replace(' ', ' ')
+	subject = session_data.get('subject') or args.subject
+	source_type = session_data.get('source')
 
-if current_profile_key i profiles:
-	print("\nNote: This session matches an existing profile.Saving is skipped.")
-	return
+	if subject:
+		print(f" Subject set: {subject}")
+		if not source_type:
+		source_type = "CLI/Loaded"
+	else:
+		subject, source_type = get_material_source()
+		subject = input("What subject are you studying? ")
 
-save_choice = input("\nDo you want to save this session as a profile? (y/n): ").strip().lower()
 
-if save_choice == 'y': 
-	if len(profiles) >= MAX_PROFILES:
-		print("\n Cannot save profile. MAX NUMBER REACHED.")
+	print("\nGenerating study materials .....")
+	prompt = build_prompt(name, method, subject)
+	response = get_study_materials(prompt)
+	print("\n" + response)
+
+	##------ Saving a Profile -------
+
+	current_profile_key = f"{name}_{method}_{subject}".replace(' ', '_')
+
+	if current_profile_key in profiles:
+		print("\nNote: This session matches an existing profile. Saving is skipped.")
 		return
 
-new_profile = {
-	"name": name, 
-	"state": state, 
-	"method": method, 
-	"subject": subject, 
-	"source": source_type
-}
+	save_choice = input("\nDo you want to save this session as a profile? (y/n): ").strip().lower()
 
-profiles[current_profile_key] = new_profile
-save_profiles(profiles)
-print(f" Session saved successful as a profile ' {current_profile_key}'.")
+	if save_choice == 'y': 
+		if len(profiles) >= MAX_PROFILES:
+			print("\nCannot save profile. MAX NUMBER REACHED.")
+			return
+
+		new_profile = {
+			"name": name, 
+			"state": state, 
+			"method": method, 
+			"subject": subject, 
+			"source": source_type
+		}
+
+		profiles[current_profile_key] = new_profile
+		save_profiles(profiles)
+		print(f" Session saved successful as a profile '{current_profile_key}'.\")
+	else:
+		print("Session not saved.")
 else:
 	print("Session not saved.")
 
