@@ -70,7 +70,7 @@ def main():
 	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
 	
 	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
-	minutes = input("How many minutes do you have to study?(Enter a whole number):")
+	minutes = int(input("How many minutes do you have to study?(Enter a whole number):"))
 	mode = study_mode(state, minutes)
 
 	print(f"Suggested mode: {mode}")
