@@ -17,6 +17,9 @@ class StudyModeTests(unittest.TestCase):
 
     def test_non_string_input_uses_safe_default(self):
         self.assertEqual(study_mode(123, 15), "basic check-in")
+    
+    def test_exhausted_returns_nap_time(self):
+        self.assertEqual(study_mode("exhausted", 5), "nap time")
 
 
 if __name__ == "__main__":
