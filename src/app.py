@@ -3,8 +3,8 @@ import argparse
 import os
 from dotenv import load_dotenv
 from google import genai
-from rules import study_mode
-from timer import pomodoro_arg_func
+from src.rules import study_mode
+from src.timer import pomodoro_arg_func
 
 #This comment is to test how to push 
 #This comment is to demonstrate second push
