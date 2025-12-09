@@ -3,7 +3,8 @@ import argparse
 import os
 from dotenv import load_dotenv
 from google import genai
-from .rules import study_mode
+from rules import study_mode
+from timer import pomodoro_arg_func
 
 #This comment is to test how to push 
 #This comment is to demonstrate second push
@@ -81,6 +82,8 @@ def main():
 	prompt = build_prompt(name, method, subject)
 	response = get_study_materials(prompt)
 	print(response)
+
+	pomodoro_arg_func()
 
 if __name__ == "__main__":
 	main()

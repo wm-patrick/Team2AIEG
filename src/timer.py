@@ -33,7 +33,7 @@ def run_timer(timer_type: str):
         print("\n⏹ Timer stopped by user.")
         sys.exit(0)
 
-def main(argv=None):
+def pomodoro_arg_func(argv=None):
     parser = argparse.ArgumentParser(
         description="Pomodoro Timer CLI for Pomodoro Study Buddy"
     )
@@ -48,4 +48,4 @@ def main(argv=None):
     run_timer(args.timer)
 
 if __name__ == "__main__":
-    main()
+    pomodoro_arg_func()
