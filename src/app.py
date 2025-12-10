@@ -3,11 +3,20 @@ import argparse
 import os
 from dotenv import load_dotenv
 from google import genai
-from src.rules import study_mode        # or: from rules import study_mode
-from src.timer import pomodoro_arg_func # or: from timer import pomodoro_arg_func
+from src.rules import study_mode     
+from src.timer import pomodoro_arg_func 
+
+#-------------------------RICH IMPORTS --------------------------------------
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Prompt, IntPrompt, Confirm
+from rich.markdown import Markdown
 
 # load the environment variables
 load_dotenv()
+
+#initialize rich console
+console = Console()
 
 api_key = os.getenv("GEMINI_API_KEY")
 
@@ -93,69 +102,77 @@ def main():
     # initialize the parser
     args = parse_args()
 
-    print("==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====")
+    #print("==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====")
+    #replacing above with rich panel
+    console.clear()
+
+    console.print(Panel.fit(
+        "[bold green]==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====[/bold green]\n"
+        "[italic]Your AI-powered Study Assistant[/italic]",
+        border_style="green"
+    ))
 
     # ---- Get the user's state of energy ----
-    state = input(
-        "What is your current state of energy today? (tired, focused, overwhelmed): "
-    ).strip().lower()
-    while state not in ["tired", "focused", "overwhelmed"]:
-        state = input(
-            "Invalid input. Please enter tired, focused, or overwhelmed: "
-        ).strip().lower()
+    state = Prompt.ask(
+        "What is your [cyan]current state[/cyan] of energy?", 
+        choices = ["Tired", "Focused", "Overwhelmed"])
 
     # ---- Get minutes available ----
-    minutes = input("How many minutes do you have to study? (Enter a whole number): ").strip()
-    while not minutes.isdigit():
-        minutes = input("Invalid input. Please enter a whole number: ").strip()
-    minutes = int(minutes)
+    minutes = IntPrompt.ask("How many [cyan]minutes[/cyan] do you have available for studying? ")
 
     # call the study_mode function to suggest a study mode
-    # (assumes study_mode(state, minutes) signature)
     mode = study_mode(state, minutes)
 
     # show the suggested study mode
-    print(f"\nSuggested mode: {mode}\n")
+    console.print(f"\n[bold yellow]Suggested mode:[/bold yellow] {mode}\n")
 
     # ---- Name ----
-    name = args.name or input("What is your name? ").strip()
+    name = args.name or Prompt.ask("What is your [bold]name[/bold]?")
 
     # ---- Method ----
     VALID_METHODS = ["Quiz", "Flashcards", "Summary"]
     method = args.method or ""
-    method = method.strip().capitalize()
 
-    while method not in VALID_METHODS:
-        method = input(
-            "What method do you want to use to learn? (Quiz, Flashcards, or Summary): "
-        ).strip().capitalize()
-        if method not in VALID_METHODS:
-            print("Invalid input. Please enter Quiz, Flashcards, or Summary.")
+    if method.capitalize() not in VALID_METHODS:
+        method = Prompt.ask(
+            "Choose a learning method", 
+            choices=VALID_METHODS
+        )
 
     # ---- Subject ----
-    subject = args.subject or ""
-    if not subject:
-        subject = input("What subject are you studying? ").strip()
+    subject = args.subject or Prompt.ask("What [bold cyan]subject[/bold cyan] are you studying?")
 
     # ---- LLM call ----
     prompt = build_prompt(name, method, subject)
-    print("\nGenerating study materials with Gemini...\n")
-    response = get_study_materials(prompt)
-    print(response)
+
+    # This creates the "dot dot dot" animation while waiting
+    with console.status("[bold green]Gemini is generating materials...[/bold green]", spinner="dots"):
+        response = get_study_materials(prompt)
+
+    # This prints the AI's answer inside a blue box, formatted as Markdown
+    console.print(Panel(
+        Markdown(response), 
+        title=f"Generated {method}", 
+        border_style="blue"
+    ))
 
     # ---- Optional Pomodoro timer ----
-    start_timer = input("\nWould you like to start a Pomodoro timer now? (yes/no): ").strip().lower()
-    if start_timer in ["yes", "y"]:
+    # Confirm.ask returns True for yes, False for no
+    if Confirm.ask("\nStart Pomodoro timer now?"):
         pomodoro_arg_func()
         
-    elif start_timer in ["no", "n"]:
+    else:
+        # If user says no, just generate a summary (your original logic)
+        console.print("[dim]Skipping timer... generating summary instead.[/dim]")
+        
         method = "Summary"
         new_prompt = build_prompt(name, method, subject)
-        print(f"\nGenerating {method}...\n")
-        response = get_study_materials(new_prompt)
-        print(response)
-    else:
-        print("Okay, no timer started. Happy studying! 🍅")
+        
+        with console.status("[bold green]Generating summary...[/bold green]"):
+            response = get_study_materials(new_prompt)
+            
+        console.print(Markdown(response))
+        console.print("[bold green]Happy studying! 🍅[/bold green]")
 
 
 if __name__ == "__main__":
