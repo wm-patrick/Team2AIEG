@@ -65,21 +65,29 @@ def main():
     #initialize the parser
 	args = parse_args()
 	
-	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
+	print("==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====")
 	
 	state = input("What is your current state of energy today? (tired, focused, overwhelmed):")
-	minutes = int(input("How many minutes do you have to study?(Enter a whole number):"))
+	while state not in ["tired", "focused", "overwhelmed"]:
+		state = input("Invalid input. Please enter tired, focused, or overwhelmed: ")		
+	minutes = input("How many minutes do you have to study?(Enter a whole number):")
+	while not minutes.isdigit():
+		minutes = input("Invalid input. Please enter a whole number: ")
+	minutes = int(minutes)
 	mode = study_mode(state, minutes)
 
 	print(f"Suggested mode: {mode}")
 
 	name = input("What is your name? ")
 	method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
+	while method not in ["Quiz", "Flashcards", "Summary"]:
+		method = input("Invalid input. Please enter Quiz, Flashcards, or Summary: ")
 	subject = input("What subject are you studying? ")
 	prompt = build_prompt(name, method, subject)
 	response = get_study_materials(prompt)
 	print(response)
-
+    #give the option to start a timer
+	#timer_yes_no = input("Would you like to start a pomodoro timer? (yes/no): ")
 	pomodoro_arg_func()
 
 if __name__ == "__main__":
