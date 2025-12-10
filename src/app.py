@@ -43,15 +43,21 @@ Subject: {subject}
 """
     return prompt.strip()
 
-
 def get_study_materials(prompt: str) -> str:
     """Call Gemini to generate study materials."""
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-    )
-    return response.text
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
+        return response.text
+    
+    except Exception as e:
 
+        print("An error occurred while generating study materials.")
+        print (f"Technical details are as follows: {str(e)}")
+
+        return "I apologize, but the AI service is currently unavailable. Please try again later."
 
 def parse_args():
     parser = argparse.ArgumentParser(
