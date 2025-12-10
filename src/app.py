@@ -6,9 +6,6 @@ from google import genai
 from src.rules import study_mode
 from src.timer import pomodoro_arg_func
 
-#This comment is to test how to push 
-#This comment is to demonstrate second push
-
 #load the environment variables
 load_dotenv()
 
