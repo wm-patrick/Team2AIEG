@@ -36,6 +36,10 @@ Subject: {subject}
 1. Confirm to the user in a friendly and encouraging way their name and method of study.
 2. Then, generate that method of study for the user for the given subject.
 3. If you are unsure about the subject material, do NOT guess; clearly say that you are unsure.
+4. If the method is "Quiz", generate 5 multiple-choice questions (with 4 options each) about the subject.
+5. If the method is "Flashcards", generate 5 flashcards (with question on
+6. If the method is "Quiz", generate answers after the questions.
+
 """
     return prompt.strip()
 
@@ -77,7 +81,6 @@ def parse_args():
     parser.epilog = "Typical run: python -m src.app"
 
     return parser.parse_args()
-
 
 def main():
     """Main function: Contains the CLI."""
