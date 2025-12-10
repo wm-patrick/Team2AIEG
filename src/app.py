@@ -35,7 +35,7 @@ def load_profiles():
 	if not os.path.exists(PROFILES_FILE):
 		return {}
 	try:
-	 	with open (PROFILES_FILE, 'r') as f:
+		with open(PROFILES_FILE, 'r') as f:
 			return json.load(f)
 	except json.JSONDecodeError:
 		print(f"Warning, Profile not found. Starting with new profile. ")
@@ -209,7 +209,7 @@ def main():
 	if subject:
 		print(f" Subject set: {subject}")
 		if not source_type:
-		source_type = "CLI/Loaded"
+			source_type = "CLI/Loaded"
 	else:
 		subject, source_type = get_material_source()
 		subject = input("What subject are you studying? ")
@@ -245,11 +245,9 @@ def main():
 
 		profiles[current_profile_key] = new_profile
 		save_profiles(profiles)
-		print(f" Session saved successful as a profile '{current_profile_key}'.\")
+		print(f" Session saved successful as a profile '{current_profile_key}'.")
 	else:
 		print("Session not saved.")
-else:
-	print("Session not saved.")
 
 
 if __name__ == "__main__":
