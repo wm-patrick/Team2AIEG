@@ -1,5 +1,6 @@
 # ------------------------ IMPORTS GO HERE ------------------------------------
 import argparse
+import sys
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -115,10 +116,16 @@ def main():
     # ---- Get the user's state of energy ----
     state = Prompt.ask(
         "What is your [cyan]current state[/cyan] of energy?", 
-        choices = ["Tired", "Focused", "Overwhelmed"])
+        choices = ["Tired", "Focused", "Overwhelmed"],
+        case_sensitive=False)
 
-    # ---- Get minutes available ----
-    minutes = IntPrompt.ask("How many [cyan]minutes[/cyan] do you have available for studying? ")
+    # ---- Get minutes available, prompt user to enter positive number if <=0 entered ----
+    while True:
+        minutes = IntPrompt.ask("How many [cyan]minutes[/cyan] do you have available for studying? ")
+        if minutes > 0:
+            break
+        else:
+            console.print("[bold red]Please enter a positive number of minutes.[/bold red]")
 
     # call the study_mode function to suggest a study mode
     mode = study_mode(state, minutes)
@@ -136,7 +143,7 @@ def main():
     if method.capitalize() not in VALID_METHODS:
         method = Prompt.ask(
             "Choose a learning method", 
-            choices=VALID_METHODS
+            choices=VALID_METHODS, case_sensitive=False
         )
 
     # ---- Subject ----
@@ -176,7 +183,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        console.print("\n[bold yellow] Goodbye! See you next time.[/bold yellow]")
+        sys.exit(0)
 
 
 def chat_ui_placeholder():
