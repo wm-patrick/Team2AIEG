@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from rich.console import Console
 from rich.panel import Panel
-from rich.text import Text # Used for safely handling truncated content
+from rich.text import Text
 
 HISTORY_FILE = "session_history.json"
 console = Console()
