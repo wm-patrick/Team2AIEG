@@ -174,8 +174,7 @@ def start_new_session(args):
         console.print(Markdown(response))
         console.print("[bold green]Happy studying! 🍅[/bold green]")
 
-
-
+#-------------------------MAIN FUNCTION-------------------------------
 
 def main():
     """Main function: Contains the CLI."""
@@ -195,16 +194,19 @@ def main():
     console.print("\n[cyan]1. Start a New Session[/cyan]")
     console.print("\n[cyan]2. Review Past Sessions[/cyan]")
 
-    choice = Prompt.ask("Please select an option:", choices=["1", "2"], case_sensitive=False)
+    choice = Prompt.ask("\nPlease select an option (enter 1 or 2)", case_sensitive=False)
 
+   
+
+    while choice not in ["1", "2"]:
+        console.print("[bold red]Invalid choice. Please enter 1 or 2.[/bold red]")
+        choice = Prompt.ask("\nPlease select an option (enter 1 or 2)", case_sensitive=False)
+    
     if choice == "1":
         start_new_session(args)
     elif choice == "2":
         get_last_sessions(limit=3)
-#--------------------------old main code to be transferred to start_new_session function
-    # ---- Get user's state of energy ----
-   
-
+    
 if __name__ == "__main__":
     try:
         main()
