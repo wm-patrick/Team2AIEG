@@ -8,7 +8,6 @@ Implements multi-cycle logic with pause/resume functionality.
 import time
 import re
 import sys
-# Removed 'richstyle' as it's not a standard library; using rich's Style import
 from rich.console import Console
 from rich.prompt import Prompt
 from rich.text import Text
@@ -48,12 +47,10 @@ def run_phase(console: Console, duration_sec: int, phase: str, phase_style: str)
                 time.sleep(1)
                 time_left -= 1
             
-            # Check for user input every second (this is where the pause/quit interaction happens)
             try:
                 if time_left % 10 == 0 or time_left == duration_sec - 1: # Check every 10 seconds or immediately
                     if not is_paused:
-                        # Non-interrupting check: If the user types 'p' or 'q'
-                        pass # Keep running
+                        pass 
                     
             except KeyboardInterrupt:
                 console.print("\n[bold red]⏹ Timer stopped by user. Session aborted.[/bold red]")
@@ -92,7 +89,6 @@ def pomodoro_arg_func(mode_desc: str, work_min: int, break_min: int):
         
         time_left = work_sec
         
-        # FIX: Replaced complex, broken pause logic with a clear state loop
         while True:
             choice = Prompt.ask(
                 Text(f"Ready for Work? Type 'p' to [yellow]Pause[/yellow], 'q' to [red]Quit[/red], or 'Enter' to [green]Start/Resume[/green]", style=Style(dim=True)),
@@ -104,10 +100,8 @@ def pomodoro_arg_func(mode_desc: str, work_min: int, break_min: int):
                 console.print("[bold red]Session Aborted by User![/bold red]")
                 return
             elif choice == 'p':
-                # Initial pause/check: We'll jump to the pause block below
                 break 
             else:
-                # Start or Resume the work phase
                 break
         
         # --- Timer Execution ---
