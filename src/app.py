@@ -1,27 +1,26 @@
-"""Command-line entrypoint for the Pomodoro Study Buddy application.
-
-This module provides a small CLI around the study-mode suggestion, LLM
-material generation and the Pomodoro timer. The file has been cleaned up to
-remove stray spacing and normalize formatting.
-"""
-
+# ============================IMPORTS==========================
 import argparse
 import json
 import os
 import sys
 from dotenv import load_dotenv
 from typing import Dict, Optional, Tuple
-
 from google import genai
+#-------------------------LOCAL IMPORTS --------------------------------
+from src.history import get_last_sessions, log_session
+from src.rules import study_mode
+from src.timer import pomodoro_arg_func
+
+#-------------------------RICH IMPORTS --------------------------------------
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 from rich.prompt import Confirm, IntPrompt, Prompt
 from rich.table import Table
+#============================END OF IMPORTS==========================
 
-from src.history import get_last_sessions, log_session
-from src.rules import study_mode
-from src.timer import pomodoro_arg_func
+
+#============================FUNCTIONS===============================
 
 
 MAX_PROFILES = 3
@@ -123,7 +122,8 @@ def select_profile_to_load(profiles: Dict[str, dict]) -> Optional[dict]:
 				return profiles[key]
 		except ValueError:
 			console.print("[bold red]Invalid input.[/bold red] Please enter a number or 'c'.")
-
+			
+#---------- Profile Creation-------------
 
 def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 	options = {"1": "Start new session", "2": "Load existing profile", "3": "Review Past Sessions"}
