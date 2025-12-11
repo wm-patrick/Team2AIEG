@@ -1,31 +1,47 @@
 #------------------------IMPORTS GO HERE------------------------------------
 import argparse
+import sys
 import os
 import json
 from dotenv import load_dotenv
 from google import genai
-from .rules import study_mode
+from src.rules import study_mode
+from src.timer import pomodoro_arg_func
+from src.history import log_session, get_last_sessions
 
-#This comment is to test how to push 
-#This comment is to demonstrate second push
+#----- Rich Import-----#
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Prompt, IntPrompt, Confirm, Select
+from rich.markdown import Markdown
+from rich.table import Table
+
 
 #----Profile Mangement Constants ----
 MAX_PROFILES = 3
 PROFILES_FILE = "profiles.json"
+VALID_METHODS = ['Quiz', 'Flashcards', 'Summary']	
+
 
 #loading the environment variables
 load_dotenv()
 
+# Rich console 
+console = Console()
+
+
 api_key = os.getenv("GEMINI_API_KEY")
+
 
 if not api_key:
 	raise RuntimeError(
-		"key not found. Create .env file and add key"
+		"key not found. Create .env file and add GEMINI_API_KEY TO .env"
 	)
 else:
-	print("API key loaded successfully.")
+	console.print("[bold green] API key loaded successfully.[/bold green]")
 
-#2. create the Google GenAI client
+
+#2. Create the Google GenAI client
 client = genai.Client(api_key=api_key)
 
 #------ Profile funtions ----
@@ -38,7 +54,7 @@ def load_profiles():
 		with open(PROFILES_FILE, 'r') as f:
 			return json.load(f)
 	except json.JSONDecodeError:
-		print(f"Warning, Profile not found. Starting with new profile. ")
+		console.print("[bold yellow] Warning: [\bold yellow] Profile not found. Starting with a new profile. ")
 		return {}
 
 
@@ -51,20 +67,33 @@ def save_profiles(profiles):
 def delete_profile(profiles):
 	"""Prompts the user to slect and delete a file that exists"""
 	if not profiles:
-		print("No profiles to delete.")
+		console.print("[bold yellow]No profiles to delete.[/bold yellow]")
 		return profiles
 
-	print("\n ====Select a Profile to delete ====")	
+	console.print("\n[bold red] ====Select a Profile to delete [/bold red]====")	
 	profile_keys = list(profiles.keys())
+
+	table = table(title ="Available Profiles", show_header = True, header_style = "bold magenta")
+	table.add_column("#" , style="dim", width=3)
+	table.add_column("Name, style="cyan")
+	table.add_column("Subject", style="green")
+	table.add_column("Method", style="yellow")	
+	
 	for i, name in enumerate(profile_keys, 1):
 		profile_data = profiles[name]
-		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject:{profile_data.get('subject', 'N/A')}, Method: {profile_data.get('method', 'N/A')}")
+		table.add_row(str(i), 
+		profile_data.get('name', 'N/A'), 
+		profile_data.get('subject', 'N/A'), 
+		profile_data.get('method', 'N/A')
+		)
+	console.print(table)
 
 	while True:
 		try:
-			choice = input("Enter the number of the profile to delete (or 'c' to cancel): ")
+			#Rich Prompt for input
+			choice = Prompt.ask("Enter the number of the profile to delete (or 'c' to cancel): ")
 			if choice.lower() == 'c':
-				print("Deletion cancelled.")
+				console.print("Deletion cancelled.")
 				return profiles
 
 			index = int(choice) - 1
@@ -72,47 +101,88 @@ def delete_profile(profiles):
 				deleted_name = profile_keys[index]
 				del profiles[deleted_name]
 				save_profiles(profiles)
-				print(f"Profile '{deleted_name}' delete succussful.")
+				console.print(f"[bold green]Profile '{deleted_name}' delete succussful. [/bold green]")
 				return profiles
 			else:
-				print("Invalid number. Please try again.")
+				console.print("[bold red] Invalid number. Please try again. [/bold red]")
 		except ValueError:
-			print("Invalid input. Please enter a number or 'c'. ")
+			console.print("[bold red] Invalid input.[/bold red] Please enter a number or 'c'. ")
 
 
-def load_existing_profile(profiles):
+def select_profile_to_load(profiles):
 	""" Prompts the user to select and load an existing profile """
 	if not profiles:
-		print("No saved profiles found. Starting new session.")			 
+		console.print("[bold yellow]No saved profiles found.[/bold yellow] Starting new session.")			 
 		return None
-	print("\n===== Select a Profile to load ===")
+
+
+	console.print("\n[bold blue]===== Select a Profile to load ===[/bold blue]")
 	profile_keys = list(profiles.keys())
+
+	table = Table(title="Available Profiles", show_header=True, header_style="bold magenta")
+	table.add_column("#", style="dim", width=3)
+	table.add_column("Name", style="cyan")
+	table.add_column("Subject", style="green")
+	table.add_column("Method", style="yellow")
+
+
 	for i, name in enumerate(profile_keys, 1):
 		profile_data = profiles[name]
-		print(f" {i}. Name: {profile_data.get('name', 'N/A')}, Subject: {profile_data.get('subject', 'N/A')}, Method:{profile_data.get('method', 'N/A')}")
+		table.add_row(
+			str(i),
+			profile_data.get('name', 'N/A'),
+			profile_data.get('subject', 'N/A'),
+			profile_data.get('method', 'N/A')
+		)
+	console.print(table)
 
 	while True:
 		try:
-			choice = input("Enter the number of profiles to load ( or 'c' to cancel): ")
+			choice = Prompt.ask("Enter the number of profiles to load ( or 'c' to cancel): ")
 			if choice.lower() == 'c':
-				print("loading cancelled. Starting new session.")
+				console.print("loading cancelled. Starting new session.")
 				return None
 
 			index = int(choice) - 1
 			if 0 <= index < len(profile_keys):
 				profile_key = profile_keys[index]
-				print(f"Profile '{profile_key}' loaded successfuly.")
+				console.print(f"[bold green]Profile '{profile_key}' loaded successfuly.[/bold green]")
 				return profiles[profile_key]
 			else:
-				print("Invaild number. Please try again.")
+				console.print("[bold red]Invaild number. Please try again.[/bold red]")
 		except ValueError:
-			print("Invalid input. Please enter a number or 'c'.")
+			print("[bold red] Invalid input.[/bold red] Please enter a number or 'c'.")
 
+def load_or_create_profile(profiles):
+	""" Prompts user to load, create or delete a profile """
+	options ={
+		"1": "Start new session",
+		"2": "Load existing profile",
+	}
+	if profiles:
+		options["3"] = "Delete existing profile"
+
+	choice = select.ask(
+		"Choose an option:",
+		choices=list(options.values()),
+		default="Start new session"
+	)
+
+	if choice == "Load existing profile":
+		return select_profile_to_load(profiles)
+	elif choice.startswith ("Delete existing profile") :
+		delete_profile(profiles)
+		return load_or_create_profile(profiles)
+	else:
+		return None #Start new session#	
+	
 
 
 """This function builds the prompt that is sent to LLM"""
 
-def build_prompt(name, method, subject):
+
+
+def build_prompt(name: str, method: str , subject: str): -> str:
 
 	prompt = (f""" Your role is to act as a friendly tutor or instructor.
 	
@@ -122,59 +192,120 @@ def build_prompt(name, method, subject):
 	Method: {method}
 	Subject: {subject}
 	
-	Confirm to the user in a friendly and encouraging way their name and method of study. Then, generate that method of study for the user.
-			
-	if you are unsure about the subject material do not guess and state that you are unsure.""")
+	1. Confirm to the user in a friendly and encouraging way their name and method of study. 
+	2. Then, generate that method of study for the user.
+	3. If you are unsure about the subject material, do NOT guess; clearly say that you are unsure.
+	4. If the method is "Quiz", generate 5 multiple-choice questions (with 4 options each) about the subject.
+	5. If the method is "Flashcards", generate 5 flashcards (with question on
+	6. If the method is "Quiz", generate answers after the questions. 
+
+	"""
 	
-	return prompt
+	return prompt.strip()
+
+
 
 def get_study_materials(prompt: str) -> str:
-    
-    response = client.models.generate_content(
+	""" Call Gemini to generat studying materials. """
+
+	try:
+    	response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt
     )
-    
     return response.text
-def get_material_source():
-	""" Asks user to choose between source or AI generated study guide."""
 
-	while True:
-		source_choice = input("\nSelect material source: (1) Upload PDF or (2) Generate materials with AI: ").strip()
+	except Exception as e:
+		console.print(f"[bold red]Error generating study materials: {e}[/bold red
+		console.print(f" Technical details are as follows: {str(e)}")
+		return "Error generating study materials. AI service is unavailable at this time."
 
-		if source_choice == '1':
-			pdf_path = input ("Enter the path to your PDF file: ")
-		
-		#---- PDF HANDLING TO BE IMPLEMENTED 
-			return pdf_path, "PDF"
-
-		elif source_choice == '2':
-			subject = input(" What subject are you studying? ")
-			return subject, "AI"
-
-		else:
-			print("Invalid choice. Please enter'1' or '2'. ")
-			
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Pomodoro Study Buddy: suggests a study mode and can ask an LLM to generate study materials."
-    )
+	parser = argparse.ArgumentParser(
+		description=
+		 ("Pomodoro Study Buddy: suggests a study mode and can ask an LLM to generate study materials.")
+		
+	)
 
-    # This shows at the bottom of --help
-    parser.epilog = "This terminal command will run the program: python -m src.app"
+	parser.add_argument(
+		'--name',
+		help = " Your name (optional; will be asked if not provided).",
+		default=None,
+	)
+	parser.add_argument(
+		'--method',
+		help=" Study method: Quiz, Flashcards, or Summary (optional; will be asked if not provided).",
+		default=None,		
+	)
+	parser.add_argument(
+		'--subject',
+		help=" Subject you are studying (optional; will be asked if not provided).",
+		default=None,
+	)
+	# This shows at the bottom of --help
+	parser.epilog = "Typical run command: python -m src.app"
 
-    return parser.parse_args()
+	return parser.parse_args()
+
 
 
 def main():
+
 	"""Main function: Contains the CLI"""
 
     #initialize the parser
 	args = parse_args()
 	profiles = load_profiles()
-	
-	print("==== WELCOME TO THE POMODORO STUDY BUDDY ====")
-	
+	session_data = None
+
+	console.clear()
+	console.print(Panel.fit(
+		"[bold green]== WELCOME TO THE POMODORO STUDY BUDDY ==== [/bold green]\n"
+		"italic=Study smarter with AI-powered study mode suggestions and material generation!", 
+		border_style = "green" 
+
+	))
+
+	# ---- Load or create profile ---- 
+
+	session_data = load_or_create_profile(profiles)
+
+	# Inital data Setup 
+
+	if session_data:
+# load data from a slescted profile
+		console.print("[bold green] Session data loaded from profile. [/bold green]")
+	 name = session_data.get('name')
+	 method = session_data.get('method')
+	 subject = session_data.get('subject')
+	 state = session_data.get('state')
+	 minutes = session_data.get('minutes', 30
+	 source_type = session_data.get('source', 'CLI/Loaded')	 
+
+	console.print(f[dim]Loaded : Name: {name}, Method: {method}, Subject: {subject}, State: {state}, Minutes: {minutes}, Source: {source_type}[/dim]")
+
+	else: 
+		name = args.name or Prompt.ask("What is your [bold]name[/bold]? ")
+
+		method = args.method
+		if method and method.capitalize() in VALID_METHODS:
+			method = method.capitalize()
+		else:
+			method = Prompt.ask(
+				"Choose your study method",
+				choices=VALID_METHODS, case_sensitive=False
+			)
+
+		subject = args.subject or Prompt.ask("What [bold]subject[/bold] are you studying? ")
+		state = None
+		source_type = "AI"
+
+		
+
+
+
+
+		# Gather data from user input or command-line args
 	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
 	mode = study_mode(state)
 
