@@ -1,0 +1,30 @@
+[
+    {
+        "timestamp": "2025-12-11 14:24:24",
+        "name": "William",
+        "subject": "geography",
+        "method": "Quiz",
+        "content": "I apologize, but the AI service is currently unavailable. Please try again later."
+    },
+    {
+        "timestamp": "2025-12-11 14:25:04",
+        "name": "William",
+        "subject": "math",
+        "method": "Summary",
+        "content": "I apologize, but the AI service is currently unavailable. Please try again later."
+    },
+    {
+        "timestamp": "2025-12-11 14:32:14",
+        "name": "William",
+        "subject": "math",
+        "method": "Summary",
+        "content": "I apologize, but the AI service is currently unavailable. Please try again later."
+    },
+    {
+        "timestamp": "2025-12-11 14:35:20",
+        "name": "William",
+        "subject": "geography",
+        "method": "Quiz",
+        "content": "I apologize, but the AI service is currently unavailable. Please try again later."
+    }
+]

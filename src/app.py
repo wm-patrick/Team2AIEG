@@ -1,11 +1,14 @@
-# ------------------------ IMPORTS GO HERE ------------------------------------
+# ============================IMPORTS==========================
 import argparse
 import sys
 import os
 from dotenv import load_dotenv
 from google import genai
+
+#-------------------------LOCAL IMPORTS --------------------------------
 from src.rules import study_mode     
-from src.timer import pomodoro_arg_func 
+from src.timer import pomodoro_arg_func
+from src.history import log_session, get_last_sessions 
 
 #-------------------------RICH IMPORTS --------------------------------------
 from rich.console import Console
@@ -13,6 +16,9 @@ from rich.panel import Panel
 from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.markdown import Markdown
 
+#============================END OF IMPORTS==========================
+
+#============================FUNCTIONS===============================
 # load the environment variables
 load_dotenv()
 
@@ -74,8 +80,7 @@ def parse_args():
         description=(
             "Pomodoro Study Buddy: suggests a study mode and can ask an LLM "
             "to generate study materials."
-        )
-    )
+        ))
 
     parser.add_argument(
         "--name",
@@ -98,22 +103,8 @@ def parse_args():
 
     return parser.parse_args()
 
-def main():
-    """Main function: Contains the CLI."""
-    # initialize the parser
-    args = parse_args()
-
-    #print("==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====")
-    #replacing above with rich panel
-    console.clear()
-
-    console.print(Panel.fit(
-        "[bold green]==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====[/bold green]\n"
-        "[italic]Your AI-powered Study Assistant[/italic]",
-        border_style="green"
-    ))
-
-    # ---- Get the user's state of energy ----
+def start_new_session(args):
+    """Start a study session with the user's input."""
     state = Prompt.ask(
         "What is your [cyan]current state[/cyan] of energy?", 
         choices = ["Tired", "Focused", "Overwhelmed"],
@@ -152,7 +143,7 @@ def main():
     # ---- LLM call ----
     prompt = build_prompt(name, method, subject)
 
-    # This creates the "dot dot dot" animation while waiting
+    # creates the "dot dot dot" animation while waiting
     with console.status("[bold green]Gemini is generating materials...[/bold green]", spinner="dots"):
         response = get_study_materials(prompt)
 
@@ -163,13 +154,15 @@ def main():
         border_style="blue"
     ))
 
-    # ---- Optional Pomodoro timer ----
+    log_session(name, subject, method, response)
+    console.print("[dim italic]Session saved to history log.[/dim italic]")
+    # ---- Option to start Pomodoro timer ----
     # Confirm.ask returns True for yes, False for no
     if Confirm.ask("\nStart Pomodoro timer now?"):
         pomodoro_arg_func()
         
     else:
-        # If user says no, just generate a summary (your original logic)
+        # If user says no, generate a summary
         console.print("[dim]Skipping timer... generating summary instead.[/dim]")
         
         method = "Summary"
@@ -182,14 +175,39 @@ def main():
         console.print("[bold green]Happy studying! 🍅[/bold green]")
 
 
+
+
+def main():
+    """Main function: Contains the CLI."""
+    # initialize the parser
+    args = parse_args()
+
+    console.clear()
+
+    console.print(Panel.fit(
+        "[bold green]==== 🍅 WELCOME TO THE POMODORO STUDY BUDDY 🍅 ====[/bold green]\n"
+        "[italic]Your AI-powered Study Assistant[/italic]",
+        border_style="green"
+    ))
+    #---above remains
+    #---new menu system designed to be used with new history.py file below
+    console.print(f"\n[bold]Please make a selection from the menu options below:[/bold]")
+    console.print("\n[cyan]1. Start a New Session[/cyan]")
+    console.print("\n[cyan]2. Review Past Sessions[/cyan]")
+
+    choice = Prompt.ask("Please select an option:", choices=["1", "2"], case_sensitive=False)
+
+    if choice == "1":
+        start_new_session(args)
+    elif choice == "2":
+        get_last_sessions(limit=3)
+#--------------------------old main code to be transferred to start_new_session function
+    # ---- Get user's state of energy ----
+   
+
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
         console.print("\n[bold yellow] Goodbye! See you next time.[/bold yellow]")
         sys.exit(0)
-
-
-def chat_ui_placeholder():
-    """Future chat interface for Study Buddy."""
-    print("Chat UI component coming soon...")
