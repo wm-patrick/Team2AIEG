@@ -14,7 +14,6 @@ def study_mode(current_state: str, minutes: int) -> StudyModeTuple:
 
     #-------- 1. Input Validation --------#
     
-    # Corrected tuple syntax for fallback returns
     if not isinstance(current_state, str):
         logging.warning(f"Invalid state input: {type(current_state)}. Defaulting to 'basic check-in'.")
         return ("Basic check-in (15 min work/ 5 min break, 1 cycle)", 15, 5)
