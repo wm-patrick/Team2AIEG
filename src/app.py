@@ -19,7 +19,6 @@ from rich.markdown import Markdown
 #============================END OF IMPORTS==========================
 
 #============================FUNCTIONS===============================
-# load the environment variables
 load_dotenv()
 
 #initialize rich console
