@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2025-12-11 22:37:07",
+        "name": "TestUser",
+        "subject": "Math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "[stub] AI service unavailable in test environment...."
+    }
+]
