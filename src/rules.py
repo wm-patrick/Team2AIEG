@@ -7,8 +7,6 @@ logging.basicConfig(level=logging.INFO)
 def study_mode(current_state: Optional[object]) -> str:
     """Return a short study-mode suggestion string based on the user's current state.
 
-    The test-suite expects a single-argument function that returns simple, lower-case
-    labels like "deep study", "light review" or "basic check-in".
     """
 
     if not isinstance(current_state, str):
