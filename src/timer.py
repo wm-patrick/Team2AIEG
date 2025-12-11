@@ -1,4 +1,3 @@
-timer.py
 #!/usr/bin/env python3
 """Pomodoro Timer module for Pomodoro Study Buddy, integrated with Rich.
 

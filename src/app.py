@@ -1,4 +1,3 @@
-prompt = build_prompt(name, method, subject)
 """Command-line entrypoint for the Pomodoro Study Buddy application.
 
 This module provides a small CLI around the study-mode suggestion, LLM
@@ -288,18 +287,6 @@ def main():
 			sys.exit(0)
 
 
-if __name__ == "__main__":
-	main()
-    # If mode_desc suggests only rest (e.g., work_min=0)
-    console.print(f"\n[bold blue]Suggested Mode: {mode_desc}. Since you are {state}, taking a break is recommended.[/bold blue]")
-    # Exit here as the materials were provided but the recommendation is to rest/not study now.
-    console.print("\n[bold green]Happy Studying! You deserve a break. 🍅[/bold green]")
-    sys.exit(0)
-
-# This final block is only reached if the timer was initiated and completed.
-console.print("\n[bold green]Happy Studying! 🍅[/bold green]")
-
-	
 if __name__ == "__main__":
 	try:
 		main()
