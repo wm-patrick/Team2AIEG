@@ -2,7 +2,7 @@
 """Pomodoro Timer module for Pomodoro Study Buddy, integrated with Rich.
 
 Provides a simple interactive multi-cycle Pomodoro implementation with
-pause/resume support via keyboard interrupts.
+pause/resume support via specific keys.
 """
 
 import re
