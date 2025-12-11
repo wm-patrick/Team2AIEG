@@ -282,7 +282,7 @@ def main():
 	 minutes = session_data.get('minutes', 30
 	 source_type = session_data.get('source', 'CLI/Loaded')	 
 
-	console.print(f[dim]Loaded : Name: {name}, Method: {method}, Subject: {subject}, State: {state}, Minutes: {minutes}, Source: {source_type}[/dim]")
+	console.print(f"[dim]Loaded : Name: {name}, Method: {method}, Subject: {subject}, State: {state}, Minutes: {minutes}, Source: {source_type}[/dim]")
 
 	else: 
 		name = args.name or Prompt.ask("What is your [bold]name[/bold]? ")
@@ -295,94 +295,93 @@ def main():
 				"Choose your study method",
 				choices=VALID_METHODS, case_sensitive=False
 			)
-
+			
 		subject = args.subject or Prompt.ask("What [bold]subject[/bold] are you studying? ")
 		state = None
 		source_type = "AI"
+#---- Get User State and available Minutes-----
+if not state:
+	state = Prompt.ask(
+		"What is your current state of energy today?",
+		choices=["tired", "focused", "overwhelmed, exhausted"],
+		case_sensitive = False)
 
-		
+else: 
+	console.print(f"[dim] Loaded state: {state} [/dim]")
 
+minutes = session_data.get('minutes, 0) if session_data else 0
+if minuntes <= 0:
+	while True:
+		minutes = IntPrompt.ask("How many minutes do you have available to study today? (Enter a positive integer)")
+		if minuntes > 0:
+			break
+		else:
+			console.print("[bold red] Please enter a valid postive number for minutes. [/bold red]")
+else:
+	console.print(f"[dim] Loaded minutes: {minutes} [/dim]")
 
+#-----Study Mode Suggestion -----
+# 3 part tuple (mode_desc, work_min, break_min)
 
+mode_desc, work_min, break_min = study_mode(state, minutes)
 
-		# Gather data from user input or command-line args
-	state = input("What is your current state of energy today?: (tired, focused, overwhelmed)")
-	mode = study_mode(state)
-
-	print(f"Suggested mode: {mode}")
-
-	name = session_data.get('name') or args.name
-	if not name:
-		name = input("What is your name? ")
-	print(f" Name set: {name}")
-
-
-	VALID_METHODS = ['quiz', 'flashcards', 'summary']
-	method = session_data.get('method') or args.method
-
-
-	if method and method.strip().lower() in VALID_METHODS:
-		method = method.strip()
-		print(f" Method set: {method}")
-	else:
-		method = ""
-		while method.strip().lower() not in VALID_METHODS:
-			method = input("What method do you want to use to learn? (Quiz, Flashcards or Summary) ")
-			
-			if method.strip().lower() in VALID_METHODS:
-				break
-			else:
-				print("Invalid selecetion. Please enter only Quiz, Flashcards, or Summary.")
-
-	subject = session_data.get('subject') or args.subject
-	source_type = session_data.get('source')
-
-	if subject:
-		print(f" Subject set: {subject}")
-		if not source_type:
-			source_type = "CLI/Loaded"
-	else:
-		subject, source_type = get_material_source()
-		subject = input("What subject are you studying? ")
+console.print(f"/n [bold blue] Suggested Study Mode: [/bold blue] {mode_desc} \n)")
 
 
-	print("\nGenerating study materials .....")
-	prompt = build_prompt(name, method, subject)
+prompt = build_prompt(name, method, subject)
+
+#--- Shows user .... animation while waiting------
+with console.status("[bold green] Generating study materials...[/bold green]", spinner="dots"):
 	response = get_study_materials(prompt)
-	print("\n" + response)
 
-	##------ Saving a Profile -------
+console.print(Panel(
+	Markdown(response),
+	title= f"[bold green] Your Study Materials generated for {subject}[/bold green]",)
+	border_style = "blue"
+))
+# ---- Logs session after getting materials -----
+log_session(name, method, subject, state, minutes, source_type)
+console.print("[dim italic] Session successfully saved to history. [/dim italic]")
 
-	current_profile_key = f"{name}_{method}_{subject}".replace(' ', '_')
+#----- Saving Profile Section -----
+current_profile_key = f"{name}_{method}_{subject}".replace(' ', '_')
 
-	if current_profile_key in profiles:
-		print("\nNote: This session matches an existing profile. Saving is skipped.")
-		return
-
-	save_choice = input("\nDo you want to save this session as a profile? (y/n): ").strip().lower()
-
-	if save_choice == 'y': 
-		if len(profiles) >= MAX_PROFILES:
-			print("\nCannot save profile. MAX NUMBER REACHED.")
-			return
-
+if current_profile_key not in profiles and len(profiles) < MAX_PROFILES:
+	if Confirm.ask("Do you want to save this session as a profile?"):
 		new_profile = {
-			"name": name, 
-			"state": state, 
-			"method": method, 
-			"subject": subject, 
-			"source": source_type
+			"name": name,
+			"state": state,
+			"method": method,
+			"subject": subject,
+			"source": source_type,
+			"minutes": minutes
 		}
-
 		profiles[current_profile_key] = new_profile
 		save_profiles(profiles)
-		print(f" Session saved successful as a profile '{current_profile_key}'.")
-	else:
-		print("Session not saved.")
+		console.print(f"[bold green] Profile '{current_profile_key}' saved successfully. [/bold
+elif len(profiles) >= MAX_PROFILES: and current_profile_key not in profiles:
+	console.print(f"\n--[bold red] Cannot save profile. MAX NUMBER REACHED. [/bold red]	")	
+else:
+	console.print("\n[dim italic] Note: This session matches an existing profile. Saving is skipped.[/dim]
+
+if work_min > 0 
+	console.print(f"/n [bold blue] Suggested Mode: {mode_desc} - Please take a break and come back refereshed! [/bold blue]")
+
+elif Confirm.ask("/n[bold green] Do you want to start the Pomodoro timer now? [/bold green]"):
+
+	pomodoro_arg_func(mode_desc, work_min, break_min)
+
+console.print("\n[bold green] Happy Studying! [/bold green]")
 
 
+	
 if __name__ == "__main__":
-	main()
-def chat_ui_placeholder():
-    """Future chat interface for Study Buddy."""
-    print("Chat UI component coming soon...")
+	try:
+		main()
+	except KeyboardInterrupt:
+		console.print("\n[bold red] Goodbye! See you next time. Program exiting... [/bold red]")
+		sys.exit(0)
+	)
+	
+
+
