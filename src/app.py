@@ -184,6 +184,7 @@ def parse_args():
 	parser.epilog = "Typical run command: python -m src.app"
 	return parser.parse_args()
 
+#-------------------------MAIN FUNCTION-------------------------------#
 
 def main():
 	args = parse_args()
