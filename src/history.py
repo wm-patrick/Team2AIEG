@@ -11,14 +11,16 @@ console = Console()
 #-----------FUNCTIONS-----------
 
 def load_history():
-    """Loads session history from a JSON file."""
-    if not os.path.exists(HISTORY_FILE):
-        return []
-    try:
-        with open(HISTORY_FILE, 'r') as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        console.print("[bold red]Warning: History file corrupted. Starting new log.[/bold red]")
+    """Loads session history from a JSON file."""
+    if not os.path.exists(HISTORY_FILE):
+        return []
+    try:
+        with open(HISTORY_FILE, 'r') as f:
+        
+        return json.load(f)
+
+    except json.JSONDecodeError:
+      console.print("[bold red]Warning: History file corrupted. Starting new log.[/bold red]")
         return []
     except Exception as e:
         console.print(f"[bold red]Error loading history:[/bold red] {e}")
@@ -80,4 +82,4 @@ def get_last_sessions(limit: int = 5):
                 title=f"[bold]Session {i}[/bold]",
                 border_style="blue"
             )
-        )   
+   )   
