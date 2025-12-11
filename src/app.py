@@ -5,7 +5,6 @@ import os
 import json
 from dotenv import load_dotenv
 from google import genai
-# Assuming these local imports are in place and correct
 from src.rules import study_mode
 from src.timer import pomodoro_arg_func
 from src.history import log_session, get_last_sessions
