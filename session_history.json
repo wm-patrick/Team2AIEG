@@ -1,5 +1,15 @@
 [
     {
+        "timestamp": "2025-12-12 00:05:07",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello there! I'm William, your friendly tutor for today.  So, just to confirm, you're looking for a **quiz** on **basic math**, right? Fantastic! Let's get started.  Here are 5 multiple-choice questio..."
+    },
+    {
         "timestamp": "2025-12-12 00:02:14",
         "name": "William",
         "subject": "basic math",

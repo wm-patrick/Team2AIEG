@@ -152,7 +152,8 @@ def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 
 def build_prompt(name: str, method: str, subject: str) -> str:
 	prompt = f"""
-Your role is to act as a friendly tutor or instructor.
+Your role is to act as a friendly tutor or instructor. For the following user,
+studying the specified subject who is studying using a specified method, generate appropriate study materials.
 
 Name: {name}
 Method: {method}
