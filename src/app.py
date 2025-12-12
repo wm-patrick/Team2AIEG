@@ -135,7 +135,7 @@ def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 
 	choices = list(options.keys())
 	while True:
-		choice = Prompt.ask("Enter selection (1, 2, 3...)", choices=choices, case_sensitive=False)
+		choice = Prompt.ask("Enter selection (Please choose: 1, 2, 3)", choices=choices, case_sensitive=False)
 		selected = options.get(choice)
 		if selected == "Load existing profile":
 			return select_profile_to_load(profiles)
