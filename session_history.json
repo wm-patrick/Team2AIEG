@@ -1,5 +1,115 @@
 [
     {
+        "timestamp": "2025-12-12 01:36:19",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. You're looking for a quiz to help you study math, is that right?  Excellent choice! Quizzes are a fantastic way to test your understanding. Let's get started with 5..."
+    },
+    {
+        "timestamp": "2025-12-12 01:31:07",
+        "name": "Wililam",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-12 01:29:14",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-12 01:20:21",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-12 01:16:35",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-12 01:13:23",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 67,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-12 01:12:22",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello William! Great to have you here. I understand you're looking for a quiz to help you study math. That's a fantastic way to test your knowledge!  Let's get started with your math quiz. Here are 5 ..."
+    },
+    {
+        "timestamp": "2025-12-12 00:43:23",
+        "name": "William",
+        "subject": "golf",
+        "method": "Quiz",
+        "state": "overwhelmed",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello William! Great to hear you're ready to dive into the world of **golf** using the **Quiz** method! Let's get started with some questions to test your knowledge.  Here are 5 multiple-choice questi..."
+    },
+    {
+        "timestamp": "2025-12-12 00:35:48",
+        "name": "William",
+        "subject": "cooking",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 56,
+        "source": "CLI/New",
+        "material_preview": "Hey there, William! Great to have you here. I understand you're looking to study cooking using the \"Summary\" method. That's a fantastic way to grasp key concepts quickly!  Let's dive right into some h..."
+    },
+    {
+        "timestamp": "2025-12-12 00:32:35",
+        "name": "1",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello there, 1! I understand you're ready to tackle some basic math using a quiz method. That's a fantastic way to test your knowledge!  Let's get started with your quiz. Here are 5 multiple-choice qu..."
+    },
+    {
+        "timestamp": "2025-12-12 00:08:52",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello William! It's great to help you prepare for your basic math quiz today!  Here are 5 multiple-choice questions to help you practice:  ---  **Basic Math Quiz**  1.  What is 15 + 7?     a) 20     b..."
+    },
+    {
         "timestamp": "2025-12-12 00:05:07",
         "name": "William",
         "subject": "basic math",

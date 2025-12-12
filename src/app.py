@@ -1,4 +1,4 @@
-# ============================IMPORTS==========================
+# ============================IMPORTS==================================
 import argparse
 import json
 import os
@@ -19,10 +19,7 @@ from rich.prompt import Confirm, IntPrompt, Prompt
 from rich.table import Table
 #============================END OF IMPORTS==========================
 
-
-#============================FUNCTIONS===============================
-
-
+#-------------------------GLOBAL CONSTANTS-------------------------------#
 MAX_PROFILES = 3
 PROFILES_FILE = "profiles.json"
 VALID_METHODS = ["Quiz", "Flashcards", "Summary"]
@@ -37,6 +34,11 @@ if not api_key:
 
 client = genai.Client(api_key=api_key)
 
+#============================FUNCTIONS===============================
+
+#============================PROFILE MANAGEMENT===============================
+
+#--------- Profile Load/Save/Delete Functions-------------
 
 def load_profiles() -> Dict[str, dict]:
 	if not os.path.exists(PROFILES_FILE):
@@ -48,11 +50,9 @@ def load_profiles() -> Dict[str, dict]:
 		console.print("[bold yellow]Warning:[/bold yellow] Profile file is not readable. Starting fresh.")
 		return {}
 
-
 def save_profiles(profiles: Dict[str, dict]) -> None:
 	with open(PROFILES_FILE, "w") as f:
 		json.dump(profiles, f, indent=4)
-
 
 def delete_profile(profiles: Dict[str, dict]) -> Dict[str, dict]:
 	if not profiles:
@@ -89,7 +89,6 @@ def delete_profile(profiles: Dict[str, dict]) -> Dict[str, dict]:
 		except ValueError:
 			console.print("[bold red]Invalid input.[/bold red] Please enter a number or 'c'.")
 
-
 def select_profile_to_load(profiles: Dict[str, dict]) -> Optional[dict]:
 	if not profiles:
 		console.print("[bold yellow]No saved profiles found.[/bold yellow] Starting new session.")
@@ -123,7 +122,7 @@ def select_profile_to_load(profiles: Dict[str, dict]) -> Optional[dict]:
 		except ValueError:
 			console.print("[bold red]Invalid input.[/bold red] Please enter a number or 'c'.")
 			
-#---------- Profile Creation-------------
+#----------------------- Profile Creation-------------------------------
 
 def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 	options = {"1": "Start new session", "2": "Load existing profile", "3": "Review Past Sessions"}
@@ -149,6 +148,7 @@ def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 		if selected == "Start new session":
 			return None
 
+#------------------------- BUILD PROMPT FOR THE LLM -------------------------------#
 
 def build_prompt(name: str, method: str, subject: str) -> str:
 	prompt = f"""
@@ -167,6 +167,7 @@ Subject: {subject}
 """
 	return prompt.strip()
 
+#-----------------------GENERATE STUDY MATERIALS VIA LLM-------------------------------#
 
 def get_study_materials(prompt: str) -> str:
     """Call Gemini to generate study materials."""
@@ -185,7 +186,6 @@ def get_study_materials(prompt: str) -> str:
         console.print(f"[bold red]Error generating study materials: {e}[/bold red]")
         return "I apologize, but the AI service is currently unavailable. Please try again later."
 
-
 def parse_args():
 	parser = argparse.ArgumentParser(description="Pomodoro Study Buddy: suggests a study mode and can ask an LLM to generate study materials.")
 	parser.add_argument("--name", help="Your name (optional).", default=None)
@@ -197,6 +197,8 @@ def parse_args():
 #-------------------------MAIN FUNCTION-------------------------------#
 
 def main():
+	"""provides user interface for the Pomodoro Study Buddy application."""
+
 	args = parse_args()
 	profiles = load_profiles()
 	session_data = None
@@ -221,7 +223,7 @@ def main():
 		state = session_data.get("state")
 		minutes = session_data.get("minutes", 30)
 		source_type = session_data.get("source", "CLI/Loaded")
-		console.print(f"[dim]Loaded: Name: {name}, Method: {method}, Subject: {subject}, State: {state}, Minutes: {minutes}, Source: {source_type}[/dim]")
+		console.print(f"Loaded: Name: {name}, Method: {method}, Subject: {subject}, State: {state}, Minutes: {minutes}, Source: {source_type}", style="dim")
 	else:
 		name = args.name or Prompt.ask("What is your [bold]name[/bold]? ")
 		method = args.method
@@ -286,7 +288,7 @@ def main():
 	elif len(profiles) >= MAX_PROFILES and current_profile_key not in profiles:
 		console.print(f"\n[bold red]Cannot save profile. Maximum number of profiles reached ({MAX_PROFILES}).[/bold red]")
 	else:
-		console.print("\n[dim italic]Note: This session matches an existing profile. Saving is skipped.[/dim]")
+		console.print("\n[dim italic]Note: This session matches an existing profile. Saving is skipped.[/dim italic]")
 
 	# Pomodoro Timer Logic
 	if work_min > 0:
@@ -296,7 +298,6 @@ def main():
 			console.print("[dim]Skipping timer...[/dim]")
 			console.print("\n[bold green]Happy Studying! No timer initiated. 🍅[/bold green]")
 			sys.exit(0)
-
 
 if __name__ == "__main__":
 	try:

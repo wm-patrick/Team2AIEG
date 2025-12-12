@@ -1,9 +1,25 @@
 {
-    "William_Quiz_basic_math": {
-        "name": "William",
+    "1_Quiz_basic_math": {
+        "name": "1",
         "state": "tired",
         "method": "Quiz",
         "subject": "basic math",
+        "source": "CLI/New",
+        "minutes": 45
+    },
+    "William_Summary_cooking": {
+        "name": "William",
+        "state": "focused",
+        "method": "Summary",
+        "subject": "cooking",
+        "source": "CLI/New",
+        "minutes": 56
+    },
+    "William_Quiz_golf": {
+        "name": "William",
+        "state": "overwhelmed",
+        "method": "Quiz",
+        "subject": "golf",
         "source": "CLI/New",
         "minutes": 45
     }
