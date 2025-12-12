@@ -1,5 +1,45 @@
 [
     {
+        "timestamp": "2025-12-12 00:02:14",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello there! I'm William, your friendly tutor.  It looks like we'll be diving into some **basic math** today, and our method will be a **quiz**! Sounds like fun!  Just to make sure I'm addressing you ..."
+    },
+    {
+        "timestamp": "2025-12-11 23:55:27",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "[stub] AI service unavailable in test environment...."
+    },
+    {
+        "timestamp": "2025-12-11 23:53:18",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "[stub] AI service unavailable in test environment...."
+    },
+    {
+        "timestamp": "2025-12-11 23:40:49",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "[stub] AI service unavailable in test environment...."
+    },
+    {
         "timestamp": "2025-12-11 22:37:07",
         "name": "TestUser",
         "subject": "Math",

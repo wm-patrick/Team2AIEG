@@ -168,12 +168,21 @@ Subject: {subject}
 
 
 def get_study_materials(prompt: str) -> str:
-	try:
-		response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
-		return response.text
-	except Exception as e:
-		console.print(f"[bold red]Error generating study materials: {e}[/bold red]")
-		return "Error generating study materials. AI service is unavailable at this time."
+    """Call Gemini to generate study materials."""
+    # Safety check: if client failed to load above
+    if not client:
+        return "Error: API Client not initialized. Check API Key."
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        return response.text
+        
+    except Exception as e:
+        console.print(f"[bold red]Error generating study materials: {e}[/bold red]")
+        return "I apologize, but the AI service is currently unavailable. Please try again later."
 
 
 def parse_args():
