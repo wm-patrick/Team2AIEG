@@ -10,17 +10,36 @@ the creation of a quiz, flashcards or summary.
 -Sends short encouragement messages 
 
 ##SETUP
+##QUICKSTART
 -Python 3.10+
 -Clone this repo.
+# Clone the repository
+git clone <your-repo-url>
+cd <your-repo-folder>
+
+# Create a virtual environment (Recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
 -Create a .env file in the project root with:
     GEMINI_API_KEY=your_actual_key_here
-
--Install dependencies:
-    pip install -r requirements.txt
 
 ##USAGE
 Run the app:
 python -m src.app
+
+##COMMAND LINE OPTIONS (FLAGS)
+Flag,Description,Example
+-h, --help,Show the help message and exit.,python -m src.app --help
+--name,Your name (loads your profile if it exists).,"--name ""Patrick"""
+--subject,The topic you want to study.,"--subject ""Calculus"""
+--method,"The study format (Quiz, Flashcards, or Summary).","--method ""Quiz"""
+
+##EXAMPLE USE OF FLAGS
+python -m src.app --name "Patrick" --subject "System Design" --method "Quiz"
 
 ##RESPONSIBLE AI USE:
 We use Gemini to generate study materials and encourage the user.
@@ -41,5 +60,5 @@ Action Items as of 12/9/25:
 - Add user-friendly error messages
 - Gracefully exit the program or give user an option to restart the timer and choose a study mode again
 - add code to take PDF, clean PDF, convert to JSON and send to LLM for response
-
 - add code to create a 'memory' as was discussed in W10D1
+
