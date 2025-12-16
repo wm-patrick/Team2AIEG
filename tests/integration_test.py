@@ -45,10 +45,10 @@ def test_full_session_flow(mock_confirm, mock_int_prompt, mock_prompt, mock_clie
             pass 
 
     # 4. Assertions
-    # Did we ask the AI for the right thing? YES.
+    # ask the AI for the right thing? YES.
     mock_client.models.generate_content.assert_called_once()
     
-    # Did we ask the user for inputs? YES.
+    # ask the user for inputs? YES.
     assert mock_prompt.call_count == 5 
 
 def test_missing_api_key():
