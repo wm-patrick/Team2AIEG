@@ -1,46 +1,59 @@
 # ============================IMPORTS==================================
+
 import argparse
 import json
 import os
 import sys
+
 from dotenv import load_dotenv
 from typing import Dict, Optional, Tuple
+
 from google import genai
+
 #-------------------------LOCAL IMPORTS --------------------------------
+
 from src.history import get_last_sessions, log_session
 from src.rules import study_mode
 from src.timer import pomodoro_arg_func
 
 #-------------------------RICH IMPORTS --------------------------------------
+
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 from rich.prompt import Confirm, IntPrompt, Prompt
 from rich.table import Table
+
 #============================END OF IMPORTS==========================
 
 #-------------------------GLOBAL CONSTANTS-------------------------------#
+
 MAX_PROFILES = 3
 PROFILES_FILE = "profiles.json"
 VALID_METHODS = ["Quiz", "Flashcards", "Summary"]
 
-
+#---------------load .env variables, initialize rich console and Gemini client----------------#
 load_dotenv()
 console = Console()
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-	raise RuntimeError("API key not found. Create a .env file and add GEMINI_API_KEY")
+	print("Thank you for your interest in the Pomodoro Study Buddy!🍅")
+	raise RuntimeError("Your API key was not found. Please create a .env file and add GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
 
-#============================FUNCTIONS===============================
+#============================FUNCTIONS========================================
+#=============================================================================
 
 #============================PROFILE MANAGEMENT===============================
 
 #--------- Profile Load/Save/Delete Functions-------------
 
 def load_profiles() -> Dict[str, dict]:
+	"""Load profiles from the JSON file."""
+
+	# does the file exist?
 	if not os.path.exists(PROFILES_FILE):
 		return {}
 	try:
@@ -51,10 +64,12 @@ def load_profiles() -> Dict[str, dict]:
 		return {}
 
 def save_profiles(profiles: Dict[str, dict]) -> None:
+	"""Save profiles to the JSON file."""
 	with open(PROFILES_FILE, "w") as f:
 		json.dump(profiles, f, indent=4)
 
 def delete_profile(profiles: Dict[str, dict]) -> Dict[str, dict]:
+	"""Delete a profile from the profiles dictionary."""
 	if not profiles:
 		console.print("[bold yellow]No profiles to delete.[/bold yellow]")
 		return profiles
@@ -90,6 +105,7 @@ def delete_profile(profiles: Dict[str, dict]) -> Dict[str, dict]:
 			console.print("[bold red]Invalid input.[/bold red] Please enter a number or 'c'.")
 
 def select_profile_to_load(profiles: Dict[str, dict]) -> Optional[dict]:
+	"""Allow user to select and load a profile."""
 	if not profiles:
 		console.print("[bold yellow]No saved profiles found.[/bold yellow] Starting new session.")
 		return None
@@ -125,6 +141,7 @@ def select_profile_to_load(profiles: Dict[str, dict]) -> Optional[dict]:
 #----------------------- Profile Creation-------------------------------
 
 def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
+	"""Load an existing profile or create a new one."""
 	options = {"1": "Start new session", "2": "Load existing profile", "3": "Review Past Sessions"}
 	if profiles:
 		options["4"] = "Delete existing profile"
@@ -151,6 +168,7 @@ def load_or_create_profile(profiles: Dict[str, dict]) -> Optional[dict]:
 #------------------------- BUILD PROMPT FOR THE LLM -------------------------------#
 
 def build_prompt(name: str, method: str, subject: str) -> str:
+	"""Build the prompt for the LLM based on user inputs."""
 	prompt = f"""
 Your role is to act as a friendly tutor or instructor. For the following user,
 studying the specified subject who is studying using a specified method, generate appropriate study materials.
@@ -187,6 +205,7 @@ def get_study_materials(prompt: str) -> str:
         return "I apologize, but the AI service is currently unavailable. Please try again later."
 
 def parse_args():
+	"""Parse command-line arguments."""
 	parser = argparse.ArgumentParser(description="Pomodoro Study Buddy: suggests a study mode and can ask an LLM to generate study materials.")
 	parser.add_argument("--name", help="Your name (optional).", default=None)
 	parser.add_argument("--method", help="Study method: Quiz, Flashcards, or Summary (optional).", default=None)
@@ -286,7 +305,7 @@ def main():
 			save_profiles(profiles)
 			console.print(f"[bold green]Profile '{current_profile_key}' saved successfully.[/bold green]")
 	elif len(profiles) >= MAX_PROFILES and current_profile_key not in profiles:
-		console.print(f"\n[bold red]Cannot save profile. Maximum number of profiles reached ({MAX_PROFILES}).[/bold red]")
+		console.print(f"\n[bold red]Sorry but we couldn't save the new profile. The maximum number of profiles has been reached. To add a new profile, please re-start the program and delete an existing profile.[/bold red]")
 	else:
 		console.print("\n[dim italic]Note: This session matches an existing profile. Saving is skipped.[/dim italic]")
 

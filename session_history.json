@@ -1,5 +1,235 @@
 [
     {
+        "timestamp": "2025-12-15 01:56:09",
+        "name": "Jeff",
+        "subject": "Math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 34,
+        "source": "CLI/New",
+        "material_preview": "Hello Jeff! Great to meet you!  You're looking for a **quiz** to help you study **Math**, is that right? Fantastic choice! Quizzes are a great way to test your knowledge and see where you stand.  Here..."
+    },
+    {
+        "timestamp": "2025-12-15 01:55:02",
+        "name": "Jeff",
+        "subject": "Spanish",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 23,
+        "source": "CLI/New",
+        "material_preview": "\u00a1Hola, Jeff! \u00a1Qu\u00e9 gusto tenerte aqu\u00ed!  Entendido, Jeff, you're looking for a quiz to help you study Spanish. That's a fantastic way to test your knowledge!  Here are 5 multiple-choice questions for yo..."
+    },
+    {
+        "timestamp": "2025-12-15 01:54:08",
+        "name": "Jeff",
+        "subject": "Tai Chi",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 34,
+        "source": "CLI/New",
+        "material_preview": "Hi Jeff! I see you're ready to test your knowledge on Tai Chi with a quiz today. That's a fantastic way to reinforce what you've learned!  Here are 5 multiple-choice questions about Tai Chi for you:  ..."
+    },
+    {
+        "timestamp": "2025-12-15 01:49:49",
+        "name": "John",
+        "subject": "Health",
+        "method": "Flashcards",
+        "state": "overwhelmed",
+        "minutes": 89,
+        "source": "CLI/New",
+        "material_preview": "Hi John! Great to have you here. You're looking for some flashcards to help with your Health studies, right? Fantastic choice for active recall!  Here are 5 flashcards to get you started:  ---  **Flas..."
+    },
+    {
+        "timestamp": "2025-12-15 01:49:03",
+        "name": "Fred",
+        "subject": "Cooking",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 78,
+        "source": "CLI/New",
+        "material_preview": "Hi Fred! I see you're ready to dive into some cooking knowledge using the **Summary** method. That's a fantastic way to quickly grasp key concepts!  Here's a summary of some fundamental cooking techni..."
+    },
+    {
+        "timestamp": "2025-12-15 01:48:19",
+        "name": "Patrick",
+        "subject": "Math",
+        "method": "Summary",
+        "state": "tired",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hi Patrick! Great to see you're ready to dive into Math using the **Summary** method today! That's a fantastic way to consolidate your understanding of key concepts.  For your Math summary, let's focu..."
+    },
+    {
+        "timestamp": "2025-12-13 00:15:06",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. You're looking to get some summaries for your geography studies, right? That's a fantastic way to consolidate your learning!  Let's dive into some geography! Here's..."
+    },
+    {
+        "timestamp": "2025-12-13 00:02:17",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here!  It looks like you're ready to get started with a **Quiz** for your basic math studies. That's a fantastic way to test your knowledge!  Let's get going with your fi..."
+    },
+    {
+        "timestamp": "2025-12-13 00:01:16",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hey there, William! Great to have you here. I understand you're looking to practice some basic math using the \"Quiz\" method. That's an excellent way to test your knowledge!  Let's get started with you..."
+    },
+    {
+        "timestamp": "2025-12-12 23:59:59",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. I understand you're looking to study basic math using quizzes. That's a fantastic way to test your knowledge!  Here are 5 multiple-choice questions to help you prac..."
+    },
+    {
+        "timestamp": "2025-12-12 23:42:11",
+        "name": "William",
+        "subject": "basic math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello William! It's great to have you here. I understand you're looking for a quiz to help you study basic math. That's an excellent way to test your knowledge!  Let's get started with your quiz. Good..."
+    },
+    {
+        "timestamp": "2025-12-12 02:28:37",
+        "name": "name",
+        "subject": "math",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hello name! You're looking for study materials for **math** using the **Summary** method, right? Fantastic! I can definitely help you with that.  Since \"math\" is a very broad subject, I'll provide a h..."
+    },
+    {
+        "timestamp": "2025-12-12 02:22:15",
+        "name": "name",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hello there, name! It's great to have you here. I understand you're looking to study math using the Quiz method today. That's an excellent way to test your knowledge and reinforce what you've learned!..."
+    },
+    {
+        "timestamp": "2025-12-12 02:11:19",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "tired",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. It looks like you're ready to tackle some math with a quiz! That's an excellent way to test your understanding.  Here are 5 multiple-choice questions to get you sta..."
+    },
+    {
+        "timestamp": "2025-12-12 02:10:12",
+        "name": "William",
+        "subject": "prehistoric history",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. So you're looking for a **summary** to help with your prehistoric history studies \u2013 fantastic! Summaries are a wonderful way to grasp the main points and organize y..."
+    },
+    {
+        "timestamp": "2025-12-12 02:07:12",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hello there, William! Great to have you here. You're looking for some study materials in Geography, and we'll be focusing on the 'Summary' method today. That's an excellent way to consolidate your kno..."
+    },
+    {
+        "timestamp": "2025-12-12 02:04:45",
+        "name": "William",
+        "subject": "Geometry",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hello William!  Great to have you here! I understand you're looking to study Geometry using the **Summary** method. That's an excellent way to consolidate your understanding of key concepts.  Let's di..."
+    },
+    {
+        "timestamp": "2025-12-12 02:02:47",
+        "name": "William",
+        "subject": "geography",
+        "method": "Quiz",
+        "state": "exhausted",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hey there, William! Great to have you here! I understand you're looking to ace your **Geography** studies and you want to use the **Quiz** method to test your knowledge. That's a fantastic way to lear..."
+    },
+    {
+        "timestamp": "2025-12-12 02:01:04",
+        "name": "William",
+        "subject": "geography",
+        "method": "Quiz",
+        "state": "exhausted",
+        "minutes": 60,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. You're studying geography and looking for a quiz to test your knowledge, is that right? Fantastic!  Let's get started with your quiz. Here are 5 multiple-choice que..."
+    },
+    {
+        "timestamp": "2025-12-12 01:58:32",
+        "name": "William",
+        "subject": "golf",
+        "method": "Quiz",
+        "state": "overwhelmed",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. I understand you're looking to study golf using the **Quiz** method. That's a fantastic way to test your knowledge!  Here are 5 multiple-choice questions to help yo..."
+    },
+    {
+        "timestamp": "2025-12-12 01:57:21",
+        "name": "William",
+        "subject": "golf",
+        "method": "Quiz",
+        "state": "overwhelmed",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hello William! Great to have you here. I understand you're looking to study golf using the \"Quiz\" method. That's a fantastic way to test your knowledge!  Let's get started with your quiz. Here are 5 m..."
+    },
+    {
+        "timestamp": "2025-12-12 01:55:56",
+        "name": "William",
+        "subject": "golf",
+        "method": "Quiz",
+        "state": "overwhelmed",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hey William! Awesome, I see you're ready to get some study materials for golf using the **Quiz** method. That's a great way to test your knowledge!  Let's dive into some golf questions. Here are 5 mul..."
+    },
+    {
+        "timestamp": "2025-12-12 01:49:33",
+        "name": "William",
+        "subject": "golf",
+        "method": "Quiz",
+        "state": "overwhelmed",
+        "minutes": 45,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. I understand you're looking to study golf using the \"Quiz\" method \u2013 that's an excellent way to test your knowledge!  Let's get started with your quiz. Here are 5 mu..."
+    },
+    {
         "timestamp": "2025-12-12 01:36:19",
         "name": "William",
         "subject": "math",

@@ -55,6 +55,9 @@ William (GitHub: @wm-patrick)
 # PROMPT LIBRARY
 Promt Library Location: https://docs.google.com/document/d/1xK62k5tmNCo5H2Jc5aDURiCmJ4MJAeeXtwGZRMoIGu8/edit?usp=sharing
 
+# LINK TO EXAMPLE RUN ON YOUTUBE
+https://youtu.be/tZSs0tkV_To
+
 
 Action Items as of 12/9/25:
 - Add user-friendly error messages

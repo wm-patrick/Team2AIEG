@@ -1,26 +1,26 @@
 {
-    "1_Quiz_basic_math": {
-        "name": "1",
-        "state": "tired",
-        "method": "Quiz",
-        "subject": "basic math",
-        "source": "CLI/New",
-        "minutes": 45
-    },
-    "William_Summary_cooking": {
+    "William_Summary_geography": {
         "name": "William",
         "state": "focused",
         "method": "Summary",
-        "subject": "cooking",
+        "subject": "geography",
         "source": "CLI/New",
-        "minutes": 56
+        "minutes": 65
     },
-    "William_Quiz_golf": {
-        "name": "William",
-        "state": "overwhelmed",
-        "method": "Quiz",
-        "subject": "golf",
+    "Patrick_Summary_Math": {
+        "name": "Patrick",
+        "state": "tired",
+        "method": "Summary",
+        "subject": "Math",
         "source": "CLI/New",
         "minutes": 45
+    },
+    "Fred_Summary_Cooking": {
+        "name": "Fred",
+        "state": "focused",
+        "method": "Summary",
+        "subject": "Cooking",
+        "source": "CLI/New",
+        "minutes": 78
     }
 }
