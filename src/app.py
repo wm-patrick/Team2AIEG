@@ -38,8 +38,12 @@ console = Console()
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-	print("Thank you for your interest in the Pomodoro Study Buddy!🍅")
-	raise RuntimeError("Your API key was not found. Please create a .env file and add GEMINI_API_KEY")
+    console.print(Panel("[bold red]⚠️  Missing API Key[/bold red]\n\n"
+                        "To use the AI features, you need a Google Gemini API key.\n"
+                        "1. Create a file named [cyan].env[/cyan] in this folder.\n"
+                        "2. Add this line: [green]GEMINI_API_KEY=your_key_here[/green]",
+                        title="Configuration Error", border_style="red"))
+    sys.exit(1)
 
 client = genai.Client(api_key=api_key)
 

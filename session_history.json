@@ -1,5 +1,85 @@
 [
     {
+        "timestamp": "2025-12-16 13:17:09",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 13:16:55",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 13:14:11",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 13:13:25",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 13:13:05",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 13:09:54",
+        "name": "Test User",
+        "subject": "Python Lists",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 25,
+        "source": "CLI/New",
+        "material_preview": "# Mocked Quiz 1. What is a list?..."
+    },
+    {
+        "timestamp": "2025-12-16 09:38:00",
+        "name": "William",
+        "subject": "math",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 34,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-16 09:37:25",
+        "name": "William",
+        "subject": "geography",
+        "method": "Quiz",
+        "state": "focused",
+        "minutes": 34,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
         "timestamp": "2025-12-16 00:44:20",
         "name": "William",
         "subject": "geography",

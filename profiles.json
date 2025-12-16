@@ -1,12 +1,4 @@
 {
-    "William_Summary_geography": {
-        "name": "William",
-        "state": "focused",
-        "method": "Summary",
-        "subject": "geography",
-        "source": "CLI/New",
-        "minutes": 65
-    },
     "Patrick_Summary_Math": {
         "name": "Patrick",
         "state": "tired",
@@ -14,13 +6,5 @@
         "subject": "Math",
         "source": "CLI/New",
         "minutes": 45
-    },
-    "Fred_Summary_Cooking": {
-        "name": "Fred",
-        "state": "focused",
-        "method": "Summary",
-        "subject": "Cooking",
-        "source": "CLI/New",
-        "minutes": 78
     }
 }
