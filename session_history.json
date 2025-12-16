@@ -1,5 +1,45 @@
 [
     {
+        "timestamp": "2025-12-16 00:44:20",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hello William! It's great to have you here. I understand you're looking for some study materials for **Geography** and you'd like to use the **Summary** method. That's an excellent way to consolidate ..."
+    },
+    {
+        "timestamp": "2025-12-16 00:43:05",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "I apologize, but the AI service is currently unavailable. Please try again later...."
+    },
+    {
+        "timestamp": "2025-12-16 00:36:52",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. You're looking for a summary to help with your geography studies. Let's get started!  Geography is a fascinating subject that helps us understand our world, from th..."
+    },
+    {
+        "timestamp": "2025-12-16 00:35:12",
+        "name": "William",
+        "subject": "geography",
+        "method": "Summary",
+        "state": "focused",
+        "minutes": 65,
+        "source": "CLI/New",
+        "material_preview": "Hi William! Great to have you here. I understand you're looking for some study materials in geography, and you prefer to study using the **Summary** method. That's a fantastic way to condense informat..."
+    },
+    {
         "timestamp": "2025-12-15 01:56:09",
         "name": "Jeff",
         "subject": "Math",

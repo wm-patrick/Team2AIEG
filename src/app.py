@@ -182,6 +182,7 @@ Subject: {subject}
 3. If unsure about the subject, say you are unsure.
 4. If method is "Quiz", generate 5 multiple-choice questions with 4 options.
 5. If method is "Flashcards", generate 5 flashcards.
+6. If method is "Summary", provide a concise summary of the key concepts of some aspect of the subject.
 """
 	return prompt.strip()
 
@@ -195,7 +196,7 @@ def get_study_materials(prompt: str) -> str:
 
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.5-flash", 
             contents=prompt
         )
         return response.text
