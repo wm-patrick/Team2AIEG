@@ -58,6 +58,27 @@ Promt Library Location: https://docs.google.com/document/d/1xK62k5tmNCo5H2Jc5aDU
 # LINK TO EXAMPLE RUN ON YOUTUBE
 https://youtu.be/tZSs0tkV_To
 
+## Ethical AI & Privacy
+
+### Ethics Statement
+The Pomodoro Study Buddy utilizes Generative AI (Google Gemini) to create educational content. We prioritize academic integrity and user transparency. Users are explicitly informed that all quizzes and summaries are AI-generated and should be verified against primary course materials. We do not claim AI outputs as fact without verification, and the application is designed to support—not replace—active learning.
+
+### Risk Analysis Table
+
+| Risk Category | Potential Harm | Mitigation Strategy |
+| :--- | :--- | :--- |
+| **Accuracy / Hallucination** | The AI might generate incorrect quiz answers or false facts, leading to study errors. | **User Warning:** A disclaimer is displayed before every AI session reminding users to verify facts. |
+| **Data Privacy** | Sensitive user data could be sent to the external LLM provider. | **Data Minimization:** The app only sends the *subject topic* to the AI. No personal names or PII are transmitted. |
+| **Over-Reliance** | Students might rely entirely on the AI for studying and skip actual source materials. | **Design Choice:** The app uses the "Pomodoro" timer to encourage deep work, treating the AI only as a starting point. |
+| **Bias** | The AI model may reflect inherent biases in its training data regarding certain historical or social topics. | **Scope Limitation:** The app is intended for technical and factual academic subjects where social bias is less prevalent. |
+
+### Privacy Checklist
+
+- [x] **Local Storage:** User profiles and session history are stored 100% locally on the user's machine (`profiles.json`).
+- [x] **No PII Transmission:** Personal Identifiable Information (like user names) is stripped before sending requests to the Google Gemini API.
+- [x] **Transparency:** The application clearly states when it is connecting to the internet and using AI services.
+- [x] **User Control:** Users can delete their local profiles and history at any time via the application menu.
+
 
 Action Items as of 12/9/25:
 - Add user-friendly error messages
