@@ -9,8 +9,7 @@ the creation of a quiz, flashcards or summary.
 -Logs what was studied
 -Sends short encouragement messages 
 
-# SETUP
-# QUICKSTART
+# SETUP AND QUICKSTART
 -Python 3.10+
 -Clone this repo.
 # Clone the repository
@@ -55,6 +54,9 @@ https://youtu.be/tZSs0tkV_To
 
 # LINK TO ADOBE ACROBAT INFORMATIONAL SLIDES
 https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:c0784ed9-b6ed-4b2f-a452-e21b1e65dacf
+
+# LINK TO GOOGLE AI STUDIO VERSION OF THE POMODORO STUDY BUDDY
+https://ai.studio/apps/drive/1T6CsskD_xG3aQQdVMGEVkJn1wogNAEIH
 
 ##  Responsible AI & Privacy
 
